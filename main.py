@@ -1,5 +1,8 @@
 import tkinter
-from tkinter.filedialog import askopenfilename
+
+import tkinter.filedialog
+import tkinter.messagebox
+
 import reader
 
 root = tkinter.Tk()
@@ -21,17 +24,30 @@ canvas.place(x=0, y=0, anchor='nw')
 
 
 def open_image():
-    file = askopenfilename()
+    image = tkinter.filedialog.askopenfilename()
 
     canvas.delete('all')
 
     try:
-        reader.Reader().read_image(file, canvas)
-        print(f'Loaded "{file}".')
-        root.title(f'.TKIF Built-In Reader - {file}')
+        reader.Reader().read_image(image, canvas)
+
+        print(f'Successfully read "{image}".')
+        root.title(f'.TKIF Built-In Reader - "{image}"')
+
     except Exception as exception:
-        print(f'Exception has been raised while loading "{file}".')
+        print(f'Exception has raised while reading "{image}".')
         print(exception)
+
+        root.title(f'.TKIF Built-In Reader')
+
+        tkinter.messagebox.showerror(
+            title=f'Error',
+            message=f'"{image}".\n{exception}'
+        )
+
+
+def exit_reader():
+    exit()
 
 
 main_menu = tkinter.Menu()
@@ -39,7 +55,7 @@ file_menu = tkinter.Menu()
 
 file_menu.add_command(label='Open', command=open_image)
 file_menu.add_separator()
-file_menu.add_command(label='Exit', command=exit)
+file_menu.add_command(label='Exit', command=exit_reader)
 
 main_menu.add_cascade(label='File', menu=file_menu)
 
