@@ -7,26 +7,35 @@ import reader
 
 root = tkinter.Tk()
 
-print('Hello, World!\n- - - - - - -')
+print('\nHello, World!\n')
 
 root.title('.TKIF Built-In Reader')
-root.geometry('640x480')
+root.geometry('800x600')
+root.resizable(False, False)
 
 root.option_add("*tearOff", 'false')
 
 canvas = tkinter.Canvas(
-    width=640,
-    height=480,
+    width=800,
+    height=600,
     bg='white'
 )
 
-canvas.place(x=0, y=0, anchor='nw')
+canvas.place(x=-1, y=-2, anchor='nw')
 
 
-def open_image():
+def command_file_new():
+
+    total = canvas.find_all()
+    canvas.delete('all')
+
+    print(f'Canvas cleared. Total deleted {len(total)} objects.')
+
+
+def command_file_open():
     image = tkinter.filedialog.askopenfilename()
 
-    canvas.delete('all')
+    command_file_new()
 
     try:
         reader.Reader().read_image(image, canvas)
@@ -41,23 +50,28 @@ def open_image():
         root.title(f'.TKIF Built-In Reader')
 
         tkinter.messagebox.showerror(
-            title=f'Error',
+            title=f'Error!',
             message=f'"{image}".\n{exception}'
         )
 
 
-def exit_reader():
-    exit()
-
+mouse_position = tkinter.StringVar(value=str())
 
 main_menu = tkinter.Menu()
 file_menu = tkinter.Menu()
 
-file_menu.add_command(label='Open', command=open_image)
+file_menu.add_command(label='New', command=command_file_new)
+file_menu.add_command(label='Open', command=command_file_open)
 file_menu.add_separator()
-file_menu.add_command(label='Exit', command=exit_reader)
+file_menu.add_command(label='Exit', command=lambda: exit())
 
 main_menu.add_cascade(label='File', menu=file_menu)
+
+frame = tkinter.Frame(borderwidth=1, relief='ridge', background='white')
+tkinter.Label(frame, textvariable=mouse_position, background='white').pack(anchor='w', expand=1)
+frame.pack(anchor='sw', expand=1, fill='x')
+
+root.bind('<Motion>', lambda mouse: mouse_position.set(f'{mouse.x}, {mouse.y}'))
 
 root.config(menu=main_menu)
 root.mainloop()
