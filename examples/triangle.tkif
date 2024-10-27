@@ -1,0 +1,27 @@
+; Points.
+
+[A]
+x = 50
+y = 50
+
+[B]
+x = 50
+y = 100
+
+[C]
+x = 100
+y = 100
+
+; Lines.
+
+[line_a]
+a = A
+b = B
+
+[line_b]
+a = B
+b = C
+
+[line_c]
+a = C
+b = A

@@ -3,7 +3,7 @@ import tkinter
 import tkinter.filedialog
 import tkinter.messagebox
 
-import reader
+import lib.tkif
 
 root = tkinter.Tk()
 
@@ -38,7 +38,7 @@ def command_file_open():
     command_file_new()
 
     try:
-        reader.Reader().read_image(image, canvas)
+        lib.tkif.Reader().read_image(image, canvas)
 
         print(f'Successfully read "{image}".')
         root.title(f'.TKIF Built-In Reader - "{image}"')
@@ -59,6 +59,7 @@ mouse_position = tkinter.StringVar(value=str())
 
 main_menu = tkinter.Menu()
 file_menu = tkinter.Menu()
+view_menu = tkinter.Menu()
 
 file_menu.add_command(label='New', command=command_file_new)
 file_menu.add_command(label='Open', command=command_file_open)
