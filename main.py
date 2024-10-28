@@ -59,7 +59,6 @@ mouse_position = tkinter.StringVar(value=str())
 
 main_menu = tkinter.Menu()
 file_menu = tkinter.Menu()
-view_menu = tkinter.Menu()
 
 file_menu.add_command(label='New', command=command_file_new)
 file_menu.add_command(label='Open', command=command_file_open)
